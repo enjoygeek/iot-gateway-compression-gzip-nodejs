@@ -1,0 +1,42 @@
+{
+  "name": "iot-gateway-compression-gzip-nodejs",
+  "version": "0.1.0",
+  "description": "NodeJS GZip Compression Module for Azure IoT Gateway",
+  "main": "js/compressor.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WilliamBerryiii/iot-gateway-compression-gzip-nodejs.git"
+  },
+  "keywords": [
+    "azure-iot-gateway",
+    "iot",
+    "compression",
+    "nodejs"
+  ],
+  "author": "William R. Berry (http://williamberryiii.com/)",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/WilliamBerryiii/iot-gateway-compression-gzip-nodejs/issues"
+  },
+  "homepage": "https://github.com/WilliamBerryiii/iot-gateway-compression-gzip-nodejs#readme",
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jshint": "^2.9.2",
+    "mocha": "^3.2.0",
+    "mocha-jshint": "^2.3.1",
+    "mocha-sinon": "^1.1.6",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.8.0"
+  }
+}
