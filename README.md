@@ -19,7 +19,7 @@ Add the following module to the `modules` section of your gateway JSON configura
             "loader": {
                 "name": "node",
                 "entrypoint": {
-                    "main.path": "node_modules//iot-gateway-compression-gzip-nodejs//compressor.js"
+                    "main.path": ".\node_modules\iot-gateway-compression-gzip-nodejs\compressor.js"
                 }
             },
             "args": null
