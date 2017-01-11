@@ -81,10 +81,9 @@
         it('should publish expected array to message bus.', () => {
 
             var message = { content: "this is a message." };
-            var array = new Uint8Array([ 72,52,115,73,65,65,65,65,65,65,65,65,67,121,
-                                        118,74,121,67,120,87,65,75,74,69,104,100,122,
-                                        85,52,117,76,69,57,70,81,57,65,80,110,83,85,
-                                        85,85,83,65,65,65,65 ]);
+            var array = new Uint8Array([ 31,139,8,0,0,0,0,0,0,11,43,201,200,44,
+                                        86,0,162,68,133,220,212,226,226,196,244,
+                                        84,61,0,249,210,81,69,18,0,0,0 ]);
             var expected = { content: array };
 
             return runCompressor(message)

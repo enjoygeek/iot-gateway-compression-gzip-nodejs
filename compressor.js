@@ -19,7 +19,7 @@ module.exports = {
         
         zlib.gzip(data, function(err, compressed){
             if(!err){ 
-                message.content = new Uint8Array(Buffer.from(compressed.toString('base64')));
+                message.content = new Uint8Array(compressed);
                 self.messageBus.publish(message);
             }else{
                 throw new Error('Error running gzip compression for data blob: %s', data);
