@@ -1,6 +1,6 @@
 {
   "name": "iot-gateway-compression-gzip-nodejs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "NodeJS GZip Compression Module for Azure IoT Gateway",
   "main": "js/compressor.js",
   "scripts": {

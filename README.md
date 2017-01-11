@@ -9,18 +9,20 @@ Using this mopdule, developers can build Azure IoT Gateway solutions that send c
 
 ### Usage
 
-Add the following module to the `modules` section to you gateway JSON configuration file:
+Add the following module to the `modules` section of your gateway JSON configuration file:
 
 ```javascript 
 {
     "modules": [
         {
-            "module name": "compressor",
-            "module path": "bin//libnodejs_binding_hl.so",
-            "args": {
-                "main_path": "node_modules//iot-gateway-compression-gzip-nodejs//compressor.js",
-                "args": null
-            }
+        "name": "compressor",
+            "loader": {
+                "name": "node",
+                "entrypoint": {
+                    "main.path": "node_modules//iot-gateway-compression-gzip-nodejs//compressor.js"
+                }
+            },
+            "args": null
         },
         ...
 ```
@@ -53,6 +55,7 @@ Please note we have a [code of conduct](CONTRIBUTING.md), please follow it in al
 
 ## Release History
 
+* 0.1.2 ReadMe Updates, removed base64 encoding of compressed messages.
 * 0.1.1 URL Updates
 * 0.1.0 Initial release
 
