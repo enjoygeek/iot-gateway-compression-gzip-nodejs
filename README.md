@@ -1,7 +1,7 @@
 # iot-gateway-compression-gzip-nodejs
 NodeJS GZip Compression Module for Azure IoT Gateway
 
-Using this mopdule, developers can build Azure IoT Gateway solutions that send compressed mesages to Azure IoT Hub.  This module is designed to read and re-publish messages to the gateway's message broker.
+Using this mopdule, developers can build [Azure IoT Gateway](https://github.com/Azure/azure-iot-gateway-sdk) solutions that send compressed mesages to Azure IoT Hub.  This module is designed to read and re-publish messages to the gateway's message broker.
 
 ### Installation 
 
