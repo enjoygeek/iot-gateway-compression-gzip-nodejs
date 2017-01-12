@@ -17,19 +17,18 @@ module.exports = {
         var data = message.content ? Buffer.from(message.content) : [];
         var self = this;
         //console.log(data);
-        zlib.gzip(data, function(err, compressed){
+        zlib.gunzip(data, function(err, decompressed){
             if(!err){ 
-                //console.log(compressed);
-                message.content = new Uint8Array(compressed);
+                message.content = new Uint8Array(decompressed);
                 self.messageBus.publish(message);
             }else{
-                throw new Error('Error running gzip compression for data blob: %s', data);
+                throw new Error('Error running gzip decompression for data blob: %s', data);
             }
             
         });
     },
 
     destroy: function () {
-        console.log('compressor.destroy');
+        console.log('decompressor.destroy');
     }
 };

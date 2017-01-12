@@ -1,7 +1,7 @@
 # iot-gateway-compression-gzip-nodejs
 NodeJS GZip Compression Module for Azure IoT Gateway
 
-Using this mopdule, developers can build [Azure IoT Gateway](https://github.com/Azure/azure-iot-gateway-sdk) solutions that send compressed mesages to Azure IoT Hub.  This module is designed to read and re-publish messages to the gateway's message broker.
+Using this mopdule, developers can build [Azure IoT Gateway](https://github.com/Azure/azure-iot-gateway-sdk) solutions that send and receive compressed mesages to/from Azure IoT Hub.  The compression and decompression modules are designed to read and re-publish messages to the gateway's message broker.
 
 ### Installation 
 
@@ -19,7 +19,7 @@ Add the following module to the `modules` section of your gateway JSON configura
             "loader": {
                 "name": "node",
                 "entrypoint": {
-                    "main.path": ".\node_modules\iot-gateway-compression-gzip-nodejs\compressor.js"
+                    "main.path": ".\node_modules\iot-gateway-compression-gzip-nodejs\(de)compressor.js"
                 }
             },
             "args": null
@@ -32,8 +32,8 @@ Then in the `links` section, patch the module into the message flow:
 ```javascript 
     ],
     "links": [
-        {"source": "{reader_module}", "sink": "compressor"},
-        {"source": "compressor", "sink": "{writer_module}"},
+        {"source": "{reader_module}", "sink": "(de)compressor"},
+        {"source": "(de)compressor", "sink": "{writer_module}"},
         ...
     ]
 }
@@ -55,6 +55,7 @@ Please note we have a [code of conduct](CONTRIBUTING.md), please follow it in al
 
 ## Release History
 
+* 0.2.0 Added decompression capabilities.
 * 0.1.2 ReadMe Updates, removed base64 encoding of compressed messages.
 * 0.1.1 URL Updates
 * 0.1.0 Initial release
