@@ -15,6 +15,12 @@
 
     var compressor = require('../compressor');
 
+
+    const content = "this is a message.";
+    const compressedData = new Uint8Array([31, 139, 8, 0, 0, 0, 0, 0, 0, 11, 43, 201, 200, 44,
+        86, 0, 162, 68, 133, 220, 212, 226, 226, 196, 244,
+        84, 61, 0, 249, 210, 81, 69, 18, 0, 0, 0]);
+
     var runCompressor = (message) => {
         return new Promise((resolve) => {
             compressor.receive(message);
@@ -45,10 +51,21 @@
 
     });
 
+    describe('calling decompressor.decompress with compressed data', () => {
+
+        it('should return a decompressed buffer.', () => {
+            return compressor
+                .compress(Buffer.from(content), function (err, compressed) {
+                    expect(new Uint8Array(compressed)).to.eql(compressedData);
+                });
+        });
+
+    });
+
     describe('calling compressor.receive with a simple string', () => {
 
         var messageBroker = { publish: sinon.spy() };
-        
+
         before((done) => {
             sinon.spy(console, 'log');
             done();
@@ -71,7 +88,7 @@
         });
 
         it('should not error.', () => {
-            var message = { content: "this is a message." };
+            var message = { content: content};
             return runCompressor(message)
                 .then(() => {
                     expect(messageBroker.publish).to.not.throw;
@@ -79,7 +96,7 @@
         });
 
         it('should call messageBus.publish once.', () => {
-            var message = { content: "this is a message." };
+            var message = { content: content};
             return runCompressor(message)
                 .then(() => {
                     expect(messageBroker.publish.calledOnce).to.be.true;
@@ -88,23 +105,21 @@
 
         it('should publish expected array to message bus.', () => {
 
-            var message = { content: "this is a message." };
-            var array = new Uint8Array([ 31,139,8,0,0,0,0,0,0,11,43,201,200,44,
-                                        86,0,162,68,133,220,212,226,226,196,244,
-                                        84,61,0,249,210,81,69,18,0,0,0 ]);
-            var expected = { content: array };
+            var message = { content: content};
+
+            var expected = { content: compressedData };
 
             return runCompressor(message)
                 .then(() => {
                     // compare object structure.
                     expect(messageBroker.publish.calledWithMatch(sinon.match(expected)));
                     // compare array contents.
-                    expect(messageBroker.publish.args[0][0].content).to.deep.equal(array);
+                    expect(messageBroker.publish.args[0][0].content).to.deep.equal(compressedData);
                 });
         });
 
         it('should call mesasgeBroker.publish once.', () => {
-            var message = { content: "this is a message." };
+            var message = { content: content};
             return runCompressor(message)
                 .then(() => {
                     expect(messageBroker.publish.calledOnce).to.be.true;

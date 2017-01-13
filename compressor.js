@@ -6,6 +6,10 @@ module.exports = {
     messageBus: null,
     configuration: null,
 
+    compress: function (data, callback) {
+        zlib.gzip(data, callback);
+    },
+
     create: function (messageBus, configuration) {
         this.messageBus = messageBus;
         this.configuration = configuration;
@@ -16,17 +20,17 @@ module.exports = {
     receive: function (message) {
         var data = message.content ? Buffer.from(message.content) : [];
         var self = this;
-        //console.log(data);
-        zlib.gzip(data, function(err, compressed){
-            if(!err){ 
-                //console.log(compressed);
+
+        var callback = (err, compressed) => {
+            if (!err) {
                 message.content = new Uint8Array(compressed);
                 self.messageBus.publish(message);
-            }else{
+            } else {
                 throw new Error('Error running gzip compression for data blob: %s', data);
             }
-            
-        });
+        };
+
+        self.compress(data, callback);
     },
 
     destroy: function () {

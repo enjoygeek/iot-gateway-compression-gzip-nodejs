@@ -15,6 +15,11 @@
 
     var decompressor = require('../decompressor');
 
+    const compressedArray = new Uint8Array(
+        [31, 139, 8, 0, 0, 0, 0, 0, 0, 11, 43, 201, 200, 44,
+        86, 0, 162, 68, 133, 220, 212, 226, 226, 196, 244,
+        84, 61, 0, 249, 210, 81, 69, 18, 0, 0, 0]);
+
     var runDecompressor = (message) => {
         return new Promise((resolve) => {
             decompressor.receive(message);
@@ -45,14 +50,23 @@
 
     });
 
-    describe('calling decompressor.receive with a simple string', () => {
+    describe('calling decompressor.decompress with compressed data', () => {
+
+        it('should return a decompressed buffer.', () => {
+
+            const decompressedValue = "this is a message.";
+            return decompressor
+                .decompress(Buffer.from(compressedArray), function (err, decompressed) {
+                    expect(Buffer.from(decompressed).toString()).to.equal(decompressedValue);
+                });
+        });
+
+    });
+
+    describe('calling decompressor.receive with compressed data', () => {
 
         var messageBroker = { publish: sinon.spy() };
 
-        const compressedArray = new Uint8Array([ 31,139,8,0,0,0,0,0,0,11,43,201,200,44,
-                                        86,0,162,68,133,220,212,226,226,196,244,
-                                        84,61,0,249,210,81,69,18,0,0,0 ]);
-        
         before((done) => {
             sinon.spy(console, 'log');
             done();
@@ -75,7 +89,7 @@
         });
 
         it('should not error.', () => {
-            var message = {content : compressedArray};
+            var message = { content: compressedArray };
             return runDecompressor(message)
                 .then(() => {
                     expect(messageBroker.publish).to.not.throw;
@@ -83,30 +97,30 @@
         });
 
         it('should call messageBus.publish once.', () => {
-            
-            var message = {content : compressedArray};
+
+            var message = { content: compressedArray };
             return runDecompressor(message)
                 .then(() => {
                     expect(messageBroker.publish.calledOnce).to.be.true;
                 });
         });
 
-        it('should publish expected array to message bus.', () => {
-            
+        it('should publish expected message to message bus.', () => {
+
             const decompressedValue = "this is a message.";
-            var message = { content : compressedArray };
+            var message = { content: compressedArray };
             return runDecompressor(message)
                 .then(() => {
                     // compare object structure.
                     expect(messageBroker.publish.calledWithMatch(sinon.match(message)));
                     // compare array contents.
-                    expect(messageBroker.publish.args[0][0].content).to.deep.equal(decompressedValue);
+                    expect(Buffer.from(messageBroker.publish.args[0][0].content).toString()).to.equal(decompressedValue);
                 });
         });
 
         it('should call mesasgeBroker.publish once.', () => {
-            
-            var message = {content : compressedArray};
+
+            var message = { content: compressedArray };
             return runDecompressor(message)
                 .then(() => {
                     expect(messageBroker.publish.calledOnce).to.be.true;
