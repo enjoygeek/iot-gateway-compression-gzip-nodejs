@@ -45,11 +45,15 @@ Then in the `links` section, patch the module into the message flow:
 
 Add the package to your function, [instructions here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-node#node-version--package-management) then import the module
 
-`var (de)compressor = require('(de)compressor')`
+```javascript 
+var (de)compressor = require('(de)compressor');
+```
 
 and then in your code simply call 
 
-`(de)compress({Buffer}, {callback})`
+```javascript
+(de)compress({Buffer}, {callback});
+```
 
 ### Tests
 
